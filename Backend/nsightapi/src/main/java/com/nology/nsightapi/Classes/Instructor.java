@@ -12,9 +12,10 @@ public class Instructor extends Person{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @OneToMany(targetEntity = Course.class, fetch = FetchType.LAZY)
     private List<Course> courseList;
 
-    public Instructor(String name, String photoUrl, Date dateOfBirth, String email, PhoneNumber phoneNumber, String jobRole, List<Course> courseList) {
+    public Instructor(String name, String photoUrl, Date dateOfBirth, String email, String phoneNumber, String jobRole, List<Course> courseList) {
         super(name, photoUrl, dateOfBirth, email, phoneNumber, jobRole);
         this.courseList = courseList;
     }

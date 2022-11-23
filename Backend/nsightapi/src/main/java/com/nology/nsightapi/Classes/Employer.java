@@ -14,12 +14,13 @@ public class Employer {
     private int id;
 
     @NotNull
-    private String name;
+    private String employer_name;
 
+    @OneToMany(targetEntity = Student.class, fetch = FetchType.LAZY)
     private List<Student> studentList;
 
     public Employer(String name, List<Student> studentList) {
-        this.name = name;
+        this.employer_name = name;
         this.studentList = studentList;
     }
 
@@ -31,11 +32,11 @@ public class Employer {
     }
 
     public String getName() {
-        return name;
+        return employer_name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.employer_name = name;
     }
 
     public List<Student> getStudentList() {

@@ -22,12 +22,15 @@ public class Course {
     @NotNull
     private int numberEmployed;
 
+    @ManyToOne(targetEntity = Instructor.class, fetch=FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "course_lead_id")
     private Instructor courseLead;
 
     private Date courseStart;
     private Date courseFinish;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private CourseCategory category;
 
     // Auto generate when uploading to s3 bucket
@@ -42,6 +45,7 @@ public class Course {
     private boolean active = false;
 
     @NotNull
+    @OneToMany(targetEntity = Student.class, fetch = FetchType.LAZY)
     private List<Student> studentList;
 
     public Course(String name, int numberEnrolled, int numberEmployed, Instructor courseLead, Date courseStart, Date courseFinish, CourseCategory category, String thumbnail, int numberCompleted, String description, boolean active, List<Student> studentList) {

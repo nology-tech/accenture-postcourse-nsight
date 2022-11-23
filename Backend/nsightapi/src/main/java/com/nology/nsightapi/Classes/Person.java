@@ -1,11 +1,12 @@
 package com.nology.nsightapi.Classes;
 
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
 import javax.persistence.Entity;
 import java.sql.Date;
 
-@Entity
+@MappedSuperclass
 public class Person {
 
     @NotNull
@@ -17,10 +18,10 @@ public class Person {
     @NotNull
     private String email;
     @NotNull
-    private PhoneNumber phoneNumber;
+    private String phoneNumber;
     private String jobRole;
 
-    public Person(String name, String photoUrl, Date dateOfBirth, String email, PhoneNumber phoneNumber, String jobRole) {
+    public Person(String name, String photoUrl, Date dateOfBirth, String email, String phoneNumber, String jobRole) {
         this.name = name;
         this.photoUrl = photoUrl;
         this.dateOfBirth = dateOfBirth;
@@ -64,11 +65,11 @@ public class Person {
         this.email = email;
     }
 
-    public PhoneNumber getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(PhoneNumber phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

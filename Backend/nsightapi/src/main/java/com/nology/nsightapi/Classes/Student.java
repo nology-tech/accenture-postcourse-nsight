@@ -6,8 +6,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name="students")
-public class Student extends Person{
+@Table(name="students")public class Student extends Person{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,14 +16,18 @@ public class Student extends Person{
     private int courseId;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private ConsumerOrConsultant consumerOrConsultant;
 
+
+    @ManyToOne(targetEntity = Employer.class, fetch=FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "employer_id")
     private Employer employer;
 
     @NotNull
     private boolean employed;
 
-    public Student(String name, String photoUrl, Date dateOfBirth, String email, PhoneNumber phoneNumber, String jobRole, int courseId, ConsumerOrConsultant consumerOrConsultant, Employer employer, boolean employed) {
+    public Student(String name, String photoUrl, Date dateOfBirth, String email, String phoneNumber, String jobRole, int courseId, ConsumerOrConsultant consumerOrConsultant, Employer employer, boolean employed) {
         super(name, photoUrl, dateOfBirth, email, phoneNumber, jobRole);
         this.courseId = courseId;
         this.consumerOrConsultant = consumerOrConsultant;
