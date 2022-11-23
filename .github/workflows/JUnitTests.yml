@@ -3,6 +3,9 @@ on: [push, pull_request]
 jobs:
   run_tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Backend
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
