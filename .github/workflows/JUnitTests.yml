@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./Backend
+        working-directory: ./Backend/nsightapi
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
