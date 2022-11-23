@@ -65,4 +65,4 @@ There is a customRender function in utils/testUtils that should be used whenever
 
 This project uses [Prettier](https://prettier.io/) to help us out with formatting our code. We use most of the defaults, but we can override this in our .prettierrc file. You should install the Prettier VSCode extension, and can configure it to format on save, so all your code is automatically formatted.
 
-If you want to format all the files in the repository, use the 'format' script in the terminal
+If you want to format all the files in the repository, use the 'format' script in the terminal.
