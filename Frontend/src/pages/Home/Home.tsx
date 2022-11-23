@@ -5,7 +5,7 @@ import Layout from "../../components/Layout/Layout";
 export const Home = () => {
   return (
     <Layout>
-      <h1>Test</h1>
+      <h1>Testing tests</h1>
       <h2>Section Heading</h2>
       <h3>Panel Heading</h3>
       <p>
