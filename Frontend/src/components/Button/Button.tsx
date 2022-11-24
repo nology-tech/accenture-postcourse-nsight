@@ -1,5 +1,6 @@
 import classname from "classnames";
 import "./Button.scss";
+import {FaPlus} from "react-icons/fa"
 
 type ButtonProps = {
   className?: string;
@@ -28,7 +29,9 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       type={type}
     >
+      <FaPlus className = "plusIcon" size="0.7em" />
       {label}
+      
     </button>
   );
 };
