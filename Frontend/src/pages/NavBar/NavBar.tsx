@@ -1,9 +1,14 @@
-import * as React from "react";
+import React from 'react'
+import "./NavBar.scss"
 
-export interface props {}
+const NavBar: React.FC<{}> = () => {
+  return (
+    <nav className="navbar">
+      <div className="logo-container">
+        <div className="logo-container_logo">Logo</div>
+      </div>
+    </nav>
+  )
+}
 
-export const NavBar: React.FC<props> = (): JSX.Element => (
-    <div>
-        {"NavBar"}
-    </div>
-);
+export default NavBar;  
