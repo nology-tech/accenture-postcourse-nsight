@@ -1,0 +1,112 @@
+-------
+Classes
+-------
+Course**
+
+id - (auto generated) (INT)
+name - STRING (max char 255)
+numberEnrolled - INT (0+)
+numberEmployed - INT (0+)
+courseLead - Instructor 
+courseStart - DATE
+courseFinish - date or null?
+category - ENUM (full-time, self-paced, corporate)
+thumbnail - STRING (image url stored in s3)
+numberCompleted - INT (0+)
+description - STRING (max char LONG)
+active - BOOLEAN 
+studentList - List<STUDENT> (0-many)
+
+Instructor extends Person**
+
+id - (auto generated) (INT)
+courseList - List<Course> (0-many)
+
+PhoneNumber**
+
+countryCode - INT
+phoneDigits - STRING
+
+Student extends Person**
+
+id - (auto generated) (INT)
+courseId - INT
+consumerOrConsultant - ConsumerOrConsultant
+employer - Employer | null?
+employed - BOOLEAN
+
+Employer**
+
+id - (auto generated) (INT)
+name - STRING
+studentList - List<Student> (0-many)
+
+Person**
+
+name - STRING
+photo - URL to s3 storage
+dateOfBirth - date
+email - STRING (validate w/ regex)
+mobileNumber - PHONENUMBER
+jobRole - STRING
+
+CourseCategory (ENUM)
++Full-Time
++Self-Paced
++Corporate
+
+ConsumerOrConsultant (ENUM)
++Consumer
++Consultant
+
+-----------------
+CONTROLLERS/REPOS
+-----------------
+Employer
+Student
+Instructor
+Course
+
+--------
+AWS TECH
+--------
+Amazon RDS - SQL
+S3 - Image storage
+API gateway - API gateway stuff?**
+***WHERE TO HOST THE ACTUAL API?***
+Elastic beanstalk *VS* EC2
+
+---------
+ENDPOINTS
+---------
+Student by id
+Student list
+Student by course
+Student by employer
+CREATE student
+DELETE student
+UPDATE student
+
+Course by id
+Course list
+Course by instructor
+CREATE course
+DELETE course
+UPDATE course
+
+Instructor by id
+Instructor list
+CREATE instructor
+DELETE instructor
+UPDATE instructor
+
+Employer by id
+Employer list
+CREATE employer
+DELETE employer
+UPDATE employer
+
+------------------
+NAMING CONVENTIONS
+------------------
+s3 naming - <<COURSE NAME-STUDENT NAME-STUDENT ID>> replace " " with "_"
