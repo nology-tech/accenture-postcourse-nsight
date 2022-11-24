@@ -1,58 +1,67 @@
 package com.nology.nsightapi.Classes;
 
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 
 @Entity
 @Table(name="courses")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull
+    @Column(name = "course_name", nullable = false)
     private String name;
 
-    @NotNull
+    @Column(name = "number_enrolled", nullable = false)
     private int numberEnrolled;
 
-    @NotNull
+    @Column(name = "number_employed", nullable = false)
     private int numberEmployed;
 
-    @ManyToOne(targetEntity = Instructor.class, fetch=FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinColumn(name = "course_lead_id")
-    private Instructor courseLead;
+    @ManyToOne(fetch=FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "instructor_id", referencedColumnName = "id", nullable = false)
+    private Instructor instructorId;
 
+    @Column(name = "course_start", nullable = true)
     private Date courseStart;
+
+    @Column(name = "course_finish", nullable = true)
     private Date courseFinish;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(name = "course_category", nullable = false)
     private CourseCategory category;
 
     // Auto generate when uploading to s3 bucket
+    @Column(name = "thumbnail", nullable = true)
     private String thumbnail;
 
-    @NotNull
+    @Column(name = "number_completed", nullable = false)
     private int numberCompleted;
 
+    @Column(name = "description", nullable = true)
     private String description;
 
-    @NotNull
+    @Column(name = "active", nullable = false)
     private boolean active = false;
 
-    @NotNull
-    @OneToMany(targetEntity = Student.class, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Student.class, fetch = FetchType.LAZY, mappedBy = "courseId")
     private List<Student> studentList;
 
     public Course(String name, int numberEnrolled, int numberEmployed, Instructor courseLead, Date courseStart, Date courseFinish, CourseCategory category, String thumbnail, int numberCompleted, String description, boolean active, List<Student> studentList) {
         this.name = name;
         this.numberEnrolled = numberEnrolled;
         this.numberEmployed = numberEmployed;
-        this.courseLead = courseLead;
+        this.instructorId = courseLead;
         this.courseStart = courseStart;
         this.courseFinish = courseFinish;
         this.category = category;
@@ -92,14 +101,6 @@ public class Course {
 
     public void setNumberEmployed(int numberEmployed) {
         this.numberEmployed = numberEmployed;
-    }
-
-    public Instructor getCourseLead() {
-        return courseLead;
-    }
-
-    public void setCourseLead(Instructor courseLead) {
-        this.courseLead = courseLead;
     }
 
     public Date getCourseStart() {
@@ -164,5 +165,13 @@ public class Course {
 
     public void setStudentList(List<Student> studentList) {
         this.studentList = studentList;
+    }
+
+    public Instructor getInstructorId() {
+        return instructorId;
+    }
+
+    public void setInstructorId(Instructor instructorId) {
+        this.instructorId = instructorId;
     }
 }

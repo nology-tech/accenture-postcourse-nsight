@@ -11,6 +11,8 @@ public interface CourseRepository extends JpaRepository<Course, String> {
 
     Course findById(int id);
 
-//    @Query(value = "SELECT * FROM courses WHERE courseLead = ?1")
-//    List<Course> findCoursesByInstructorId(@Param("id") String id);
+    void deleteById(int id);
+
+    @Query(value = "SELECT * FROM courses WHERE instructor_id = ?1", nativeQuery = true)
+    List<Course> findCoursesByInstructorId(@Param("id") String id);
 }

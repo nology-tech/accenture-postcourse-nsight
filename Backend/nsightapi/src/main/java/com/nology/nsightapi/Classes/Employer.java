@@ -1,27 +1,29 @@
 package com.nology.nsightapi.Classes;
 
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name="employers")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Employer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull
+    @Column(name = "employer_name", nullable = false)
     private String employer_name;
 
-    @OneToMany(targetEntity = Student.class, fetch = FetchType.LAZY)
-    private List<Student> studentList;
+    @OneToMany(targetEntity = Student.class, fetch = FetchType.LAZY, mappedBy = "employerId")
+    private List<Student> studentIds;
 
     public Employer(String name, List<Student> studentList) {
         this.employer_name = name;
-        this.studentList = studentList;
+        this.studentIds = studentList;
     }
 
     public Employer() {
@@ -31,19 +33,19 @@ public class Employer {
         return id;
     }
 
-    public String getName() {
+    public String getEmployer_name() {
         return employer_name;
     }
 
-    public void setName(String name) {
-        this.employer_name = name;
+    public void setEmployer_name(String employer_name) {
+        this.employer_name = employer_name;
     }
 
-    public List<Student> getStudentList() {
-        return studentList;
+    public List<Student> getStudentIds() {
+        return studentIds;
     }
 
-    public void setStudentList(List<Student> studentList) {
-        this.studentList = studentList;
+    public void setStudentIds(List<Student> studentIds) {
+        this.studentIds = studentIds;
     }
 }
