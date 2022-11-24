@@ -1,33 +1,37 @@
 package com.nology.nsightapi.Classes;
 
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name="students")public class Student extends Person{
+@Table(name="students")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Student extends Person{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    Add as foreign key
-    private int courseId;
+    @ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = true)
+    private Course courseId;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(name = "consumer_or_consultant", nullable = false)
     private ConsumerOrConsultant consumerOrConsultant;
 
 
-    @ManyToOne(targetEntity = Employer.class, fetch=FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinColumn(name = "employer_id")
+    @ManyToOne(targetEntity = Employer.class, fetch=FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "employer", referencedColumnName = "id")
     private Employer employer;
 
-    @NotNull
+    @Column(name = "employed", nullable = false)
     private boolean employed;
 
-    public Student(String name, String photoUrl, Date dateOfBirth, String email, String phoneNumber, String jobRole, int courseId, ConsumerOrConsultant consumerOrConsultant, Employer employer, boolean employed) {
+    public Student(String name, String photoUrl, Date dateOfBirth, String email, String phoneNumber, String jobRole, Course courseId, ConsumerOrConsultant consumerOrConsultant, Employer employer, boolean employed) {
         super(name, photoUrl, dateOfBirth, email, phoneNumber, jobRole);
         this.courseId = courseId;
         this.consumerOrConsultant = consumerOrConsultant;
@@ -42,11 +46,11 @@ import java.sql.Date;
         return id;
     }
 
-    public int getCourseId() {
+    public Course getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(int courseId) {
+    public void setCourseId(Course courseId) {
         this.courseId = courseId;
     }
 
@@ -74,3 +78,5 @@ import java.sql.Date;
         this.employed = employed;
     }
 }
+
+

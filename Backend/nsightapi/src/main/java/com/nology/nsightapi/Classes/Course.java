@@ -1,66 +1,75 @@
 package com.nology.nsightapi.Classes;
 
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 
 @Entity
 @Table(name="courses")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull
+    @Column(name = "course_name", nullable = false)
     private String name;
 
-    @NotNull
+    @Column(name = "number_enrolled", nullable = false)
     private int numberEnrolled;
 
-    @NotNull
+    @Column(name = "number_employed", nullable = false)
     private int numberEmployed;
 
-    @ManyToOne(targetEntity = Instructor.class, fetch=FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinColumn(name = "course_lead_id")
-    private Instructor courseLead;
+    @ManyToOne(fetch=FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "instructor", referencedColumnName = "id", nullable = false)
+    private Instructor instructor;
 
+    @Column(name = "course_start")
     private Date courseStart;
+
+    @Column(name = "course_finish")
     private Date courseFinish;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    private CourseCategory category;
+    @Column(name = "course_category", nullable = false)
+    private CourseCategory courseCategory;
 
     // Auto generate when uploading to s3 bucket
+    @Column(name = "thumbnail")
     private String thumbnail;
 
-    @NotNull
+    @Column(name = "number_completed", nullable = false)
     private int numberCompleted;
 
+    @Column(name = "description")
     private String description;
 
-    @NotNull
+    @Column(name = "active", nullable = false)
     private boolean active = false;
 
-    @NotNull
-    @OneToMany(targetEntity = Student.class, fetch = FetchType.LAZY)
-    private List<Student> studentList;
+    @OneToMany(targetEntity = Student.class, fetch = FetchType.LAZY, mappedBy = "courseId")
+    private List<Student> students;
 
-    public Course(String name, int numberEnrolled, int numberEmployed, Instructor courseLead, Date courseStart, Date courseFinish, CourseCategory category, String thumbnail, int numberCompleted, String description, boolean active, List<Student> studentList) {
+    public Course(String name, int numberEnrolled, int numberEmployed, Instructor instructor, Date courseStart, Date courseFinish, CourseCategory courseCategory, String thumbnail, int numberCompleted, String description, boolean active, List<Student> students) {
         this.name = name;
         this.numberEnrolled = numberEnrolled;
         this.numberEmployed = numberEmployed;
-        this.courseLead = courseLead;
+        this.instructor = instructor;
         this.courseStart = courseStart;
         this.courseFinish = courseFinish;
-        this.category = category;
+        this.courseCategory = courseCategory;
         this.thumbnail = thumbnail;
         this.numberCompleted = numberCompleted;
         this.description = description;
         this.active = active;
-        this.studentList = studentList;
+        this.students = students;
     }
 
     public Course() {
@@ -94,12 +103,12 @@ public class Course {
         this.numberEmployed = numberEmployed;
     }
 
-    public Instructor getCourseLead() {
-        return courseLead;
+    public Instructor getInstructor() {
+        return instructor;
     }
 
-    public void setCourseLead(Instructor courseLead) {
-        this.courseLead = courseLead;
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
     }
 
     public Date getCourseStart() {
@@ -118,12 +127,12 @@ public class Course {
         this.courseFinish = courseFinish;
     }
 
-    public CourseCategory getCategory() {
-        return category;
+    public CourseCategory getCourseCategory() {
+        return courseCategory;
     }
 
-    public void setCategory(CourseCategory category) {
-        this.category = category;
+    public void setCourseCategory(CourseCategory courseCategory) {
+        this.courseCategory = courseCategory;
     }
 
     public String getThumbnail() {
@@ -158,11 +167,11 @@ public class Course {
         this.active = active;
     }
 
-    public List<Student> getStudentList() {
-        return studentList;
+    public List<Student> getStudents() {
+        return students;
     }
 
-    public void setStudentList(List<Student> studentList) {
-        this.studentList = studentList;
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }

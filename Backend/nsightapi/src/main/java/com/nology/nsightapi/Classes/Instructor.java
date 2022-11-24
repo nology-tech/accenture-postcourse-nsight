@@ -1,23 +1,28 @@
 package com.nology.nsightapi.Classes;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="instructors")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Instructor extends Person{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(targetEntity = Course.class, fetch = FetchType.LAZY)
-    private List<Course> courseList;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="instructor")
+    private List<Course> courses = new ArrayList<>();
 
-    public Instructor(String name, String photoUrl, Date dateOfBirth, String email, String phoneNumber, String jobRole, List<Course> courseList) {
+    public Instructor(String name, String photoUrl, Date dateOfBirth, String email, String phoneNumber, String jobRole, List<Course> courses) {
         super(name, photoUrl, dateOfBirth, email, phoneNumber, jobRole);
-        this.courseList = courseList;
+        this.courses = courses;
     }
 
     public Instructor() {
@@ -27,11 +32,11 @@ public class Instructor extends Person{
         return id;
     }
 
-    public List<Course> getCourseList() {
-        return courseList;
+    public List<Course> getCourses() {
+        return courses;
     }
 
-    public void setCourseList(List<Course> courseList) {
-        this.courseList = courseList;
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }
