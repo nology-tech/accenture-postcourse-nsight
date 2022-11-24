@@ -51,7 +51,7 @@ public class InstructorController {
     @DeleteMapping("/instructor/{id}")
     public ResponseEntity<String> deleteInstructor(@PathVariable String id) {
         try {
-            System.out.println("test");
+            repository.deleteById(Integer.parseInt(id));
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Deleted instructor.");
         } catch (Exception e) {
             System.out.println(e);

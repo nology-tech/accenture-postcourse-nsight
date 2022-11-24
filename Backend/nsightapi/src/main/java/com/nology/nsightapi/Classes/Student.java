@@ -25,8 +25,8 @@ public class Student extends Person{
 
 
     @ManyToOne(targetEntity = Employer.class, fetch=FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "employer_id", referencedColumnName = "id")
-    private Employer employerId;
+    @JoinColumn(name = "employer", referencedColumnName = "id")
+    private Employer employer;
 
     @Column(name = "employed", nullable = false)
     private boolean employed;
@@ -35,7 +35,7 @@ public class Student extends Person{
         super(name, photoUrl, dateOfBirth, email, phoneNumber, jobRole);
         this.courseId = courseId;
         this.consumerOrConsultant = consumerOrConsultant;
-        this.employerId = employer;
+        this.employer = employer;
         this.employed = employed;
     }
 
@@ -62,20 +62,20 @@ public class Student extends Person{
         this.consumerOrConsultant = consumerOrConsultant;
     }
 
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
+    }
+
     public boolean isEmployed() {
         return employed;
     }
 
     public void setEmployed(boolean employed) {
         this.employed = employed;
-    }
-
-    public Employer getEmployerId() {
-        return employerId;
-    }
-
-    public void setEmployerId(Employer employerId) {
-        this.employerId = employerId;
     }
 }
 

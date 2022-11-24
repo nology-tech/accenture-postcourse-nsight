@@ -28,48 +28,48 @@ public class Course {
     private int numberEmployed;
 
     @ManyToOne(fetch=FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "instructor_id", referencedColumnName = "id", nullable = false)
-    private Instructor instructorId;
+    @JoinColumn(name = "instructor", referencedColumnName = "id", nullable = false)
+    private Instructor instructor;
 
-    @Column(name = "course_start", nullable = true)
+    @Column(name = "course_start")
     private Date courseStart;
 
-    @Column(name = "course_finish", nullable = true)
+    @Column(name = "course_finish")
     private Date courseFinish;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "course_category", nullable = false)
-    private CourseCategory category;
+    private CourseCategory courseCategory;
 
     // Auto generate when uploading to s3 bucket
-    @Column(name = "thumbnail", nullable = true)
+    @Column(name = "thumbnail")
     private String thumbnail;
 
     @Column(name = "number_completed", nullable = false)
     private int numberCompleted;
 
-    @Column(name = "description", nullable = true)
+    @Column(name = "description")
     private String description;
 
     @Column(name = "active", nullable = false)
     private boolean active = false;
 
     @OneToMany(targetEntity = Student.class, fetch = FetchType.LAZY, mappedBy = "courseId")
-    private List<Student> studentList;
+    private List<Student> students;
 
-    public Course(String name, int numberEnrolled, int numberEmployed, Instructor courseLead, Date courseStart, Date courseFinish, CourseCategory category, String thumbnail, int numberCompleted, String description, boolean active, List<Student> studentList) {
+    public Course(String name, int numberEnrolled, int numberEmployed, Instructor instructor, Date courseStart, Date courseFinish, CourseCategory courseCategory, String thumbnail, int numberCompleted, String description, boolean active, List<Student> students) {
         this.name = name;
         this.numberEnrolled = numberEnrolled;
         this.numberEmployed = numberEmployed;
-        this.instructorId = courseLead;
+        this.instructor = instructor;
         this.courseStart = courseStart;
         this.courseFinish = courseFinish;
-        this.category = category;
+        this.courseCategory = courseCategory;
         this.thumbnail = thumbnail;
         this.numberCompleted = numberCompleted;
         this.description = description;
         this.active = active;
-        this.studentList = studentList;
+        this.students = students;
     }
 
     public Course() {
@@ -103,6 +103,14 @@ public class Course {
         this.numberEmployed = numberEmployed;
     }
 
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
+
     public Date getCourseStart() {
         return courseStart;
     }
@@ -119,12 +127,12 @@ public class Course {
         this.courseFinish = courseFinish;
     }
 
-    public CourseCategory getCategory() {
-        return category;
+    public CourseCategory getCourseCategory() {
+        return courseCategory;
     }
 
-    public void setCategory(CourseCategory category) {
-        this.category = category;
+    public void setCourseCategory(CourseCategory courseCategory) {
+        this.courseCategory = courseCategory;
     }
 
     public String getThumbnail() {
@@ -159,19 +167,11 @@ public class Course {
         this.active = active;
     }
 
-    public List<Student> getStudentList() {
-        return studentList;
+    public List<Student> getStudents() {
+        return students;
     }
 
-    public void setStudentList(List<Student> studentList) {
-        this.studentList = studentList;
-    }
-
-    public Instructor getInstructorId() {
-        return instructorId;
-    }
-
-    public void setInstructorId(Instructor instructorId) {
-        this.instructorId = instructorId;
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }

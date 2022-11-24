@@ -16,14 +16,14 @@ public class Employer {
     private int id;
 
     @Column(name = "employer_name", nullable = false)
-    private String employer_name;
+    private String name;
 
-    @OneToMany(targetEntity = Student.class, fetch = FetchType.LAZY, mappedBy = "employerId")
-    private List<Student> studentIds;
+    @OneToMany(targetEntity = Student.class, fetch = FetchType.LAZY, mappedBy = "employer")
+    private List<Student> students;
 
-    public Employer(String name, List<Student> studentList) {
-        this.employer_name = name;
-        this.studentIds = studentList;
+    public Employer(String name, List<Student> students) {
+        this.name = name;
+        this.students = students;
     }
 
     public Employer() {
@@ -33,19 +33,19 @@ public class Employer {
         return id;
     }
 
-    public String getEmployer_name() {
-        return employer_name;
+    public String getName() {
+        return name;
     }
 
-    public void setEmployer_name(String employer_name) {
-        this.employer_name = employer_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<Student> getStudentIds() {
-        return studentIds;
+    public List<Student> getStudents() {
+        return students;
     }
 
-    public void setStudentIds(List<Student> studentIds) {
-        this.studentIds = studentIds;
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }

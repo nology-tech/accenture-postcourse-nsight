@@ -17,12 +17,12 @@ public class Instructor extends Person{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="instructorId")
-    private List<Course> courseIds = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="instructor")
+    private List<Course> courses = new ArrayList<>();
 
-    public Instructor(String name, String photoUrl, Date dateOfBirth, String email, String phoneNumber, String jobRole, List<Course> courseList) {
+    public Instructor(String name, String photoUrl, Date dateOfBirth, String email, String phoneNumber, String jobRole, List<Course> courses) {
         super(name, photoUrl, dateOfBirth, email, phoneNumber, jobRole);
-        this.courseIds = courseList;
+        this.courses = courses;
     }
 
     public Instructor() {
@@ -32,11 +32,11 @@ public class Instructor extends Person{
         return id;
     }
 
-    public List<Course> getCourseIds() {
-        return courseIds;
+    public List<Course> getCourses() {
+        return courses;
     }
 
-    public void setCourseIds(List<Course> courseIds) {
-        this.courseIds = courseIds;
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }
