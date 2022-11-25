@@ -1,6 +1,6 @@
 package com.nology.nsightapi.Controllers;
 
-import com.nology.nsightapi.Classes.Employer;
+import com.nology.nsightapi.Entities.Employer;
 import com.nology.nsightapi.Repositories.EmployerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

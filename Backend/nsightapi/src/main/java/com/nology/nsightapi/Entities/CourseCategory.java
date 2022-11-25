@@ -1,4 +1,4 @@
-package com.nology.nsightapi.Classes;
+package com.nology.nsightapi.Entities;
 
 public enum CourseCategory {
     FULL_TIME,

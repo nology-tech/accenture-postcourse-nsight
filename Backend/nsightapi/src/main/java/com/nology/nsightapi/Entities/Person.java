@@ -1,4 +1,4 @@
-package com.nology.nsightapi.Classes;
+package com.nology.nsightapi.Entities;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;

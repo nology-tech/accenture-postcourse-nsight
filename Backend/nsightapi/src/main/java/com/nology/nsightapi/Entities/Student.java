@@ -1,4 +1,4 @@
-package com.nology.nsightapi.Classes;
+package com.nology.nsightapi.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

@@ -1,6 +1,6 @@
 package com.nology.nsightapi.Repositories;
 
-import com.nology.nsightapi.Classes.Instructor;
+import com.nology.nsightapi.Entities.Instructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +11,5 @@ public interface InstructorRepository extends JpaRepository<Instructor, String> 
 
     Optional<Instructor> findById(int id);
 
-    void deleteById(int id);
+    Void deleteById(int id);
 }

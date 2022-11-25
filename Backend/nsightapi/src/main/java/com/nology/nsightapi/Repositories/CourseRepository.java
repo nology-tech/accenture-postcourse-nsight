@@ -1,6 +1,6 @@
 package com.nology.nsightapi.Repositories;
 
-import com.nology.nsightapi.Classes.Course;
+import com.nology.nsightapi.Entities.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,7 +1,7 @@
 package com.nology.nsightapi.Controllers;
 
 import com.mysql.cj.util.StringUtils;
-import com.nology.nsightapi.Classes.Instructor;
+import com.nology.nsightapi.Entities.Instructor;
 import com.nology.nsightapi.Exceptions.BadRequestException;
 import com.nology.nsightapi.Exceptions.IdAlreadyExistsException;
 import com.nology.nsightapi.Exceptions.NotFoundException;
@@ -57,7 +57,7 @@ public class InstructorController {
             repository.save(instructor);
             return ResponseEntity.status(HttpStatus.CREATED).body("Successfully created new instructor.");
         } catch (IdAlreadyExistsException e) {
-            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED, "ID already in use.");
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Id already in use.");
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing non-null values.");
         } catch (Exception e) {
@@ -75,6 +75,8 @@ public class InstructorController {
             return ResponseEntity.status(HttpStatus.CREATED).body("Successfully updated instructor.");
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Instructor not found.");
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing non-null values.");
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
@@ -83,9 +85,18 @@ public class InstructorController {
     @DeleteMapping("/instructor/{id}")
     public ResponseEntity<String> deleteInstructor(@PathVariable String id) {
         try {
+            if (!StringUtils.isStrictlyNumeric(id)) {
+                throw new BadRequestException();
+            } else if (repository.findById(Integer.parseInt(id)).isEmpty()) {
+                throw new NotFoundException();
+            }
             repository.deleteById(Integer.parseInt(id));
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Deleted instructor.");
-        } catch (Exception e) {
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Instructor not found.");
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Non-numeric id entered.");
+        }  catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }

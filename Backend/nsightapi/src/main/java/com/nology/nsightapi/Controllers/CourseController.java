@@ -1,6 +1,6 @@
 package com.nology.nsightapi.Controllers;
 
-import com.nology.nsightapi.Classes.Course;
+import com.nology.nsightapi.Entities.Course;
 import com.nology.nsightapi.Repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

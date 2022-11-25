@@ -1,6 +1,6 @@
 package com.nology.nsightapi.Repositories;
 
-import com.nology.nsightapi.Classes.Employer;
+import com.nology.nsightapi.Entities.Employer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
