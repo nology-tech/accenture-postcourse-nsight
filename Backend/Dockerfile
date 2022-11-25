@@ -1,14 +1,20 @@
-FROM eclipse-temurin:17-jdk-jammy
+# This base image is required to install Maven and OpenJDK
+FROM maven:3.8.6-openjdk-11
 
-WORKDIR /backend
+# This exposes port 8080 for Tomcat
+EXPOSE 8080
 
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
+# Adding folder into container
+ADD nsightapi /nsightapi
 
-RUN ./mvnw dependency:resolve
+# Set working directory inside container
+WORKDIR /nsightapi
 
-COPY src ./nsightapi/src
+# Running maven inside container
+RUN mvn package
 
-CMD ["./mvnw", "spring-boot:run"]
+# Switching to the created target folder
+WORKDIR ./target
 
-
+# Run the entrypoint inside Java
+ENTRYPOINT ["java", "-jar", "./nsightapi-0.0.1-SNAPSHOT.jar"]
