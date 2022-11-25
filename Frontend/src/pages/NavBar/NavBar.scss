@@ -1,13 +1,5 @@
-
-* {
-    margin: 0;
-    padding: 0;
-  }
-
 .navbar {
-  color: gray;
-  background: rgb(35, 43, 61);
-  border-right: 2px solid black;
+  background: #102B3F;
   border-top-right-radius: 30px 30px;
   height: 100vh;
   min-width: 300px;
@@ -15,6 +7,14 @@
   flex-direction: column;
   position: fixed;
   z-index: 1;
+
+  hr {
+    width: 250px;
+    align-self: center;
+    height: 0px;
+    border: none;
+    border-top: 1px solid rgba(114, 75, 203, 0.25);
+  }
 }
 
 .logo-container {
@@ -22,8 +22,21 @@
     align-self: center;
 
     &_logo {
-    color: gray;
-    display: flex;
+    color: rgb(193, 187, 187);
     padding: 70px;
     }
 }
+
+.links-container {
+  align-self: center;
+  padding: 30px;
+
+  .link {
+    padding: 10px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+

@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/Home";
+import Button from "./components/Button/Button";
+import Home from "./pages/Courses/Courses";
 import NavBar from "./pages/NavBar/NavBar";
 import NotFound from "./pages/NotFound/NotFound";
 import User from "./pages/User/User";
@@ -9,21 +10,21 @@ import "./styles/main.scss";
 const App = () => {
   return (
     <>
-    <NavBar />
-      <h1>Hello World</h1>
+      <NavBar />
+      <Home />
+      {/* <Routes> */}
+        {/* Routes here */}
+        {/* <Route path="/home" element={<Home />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/users/:userId" element={<User />} /> */}
+
+        {/* Any redirects */}
+        {/* <Route path="/" element={<Navigate replace to="/home" />} /> */}
+
+        {/* Last is a catch-all route that will show a not found view */}
+        {/* <Route path="*" element={<NotFound />} /> */}
+      {/* </Routes> */}
     </>
-    // <Routes>
-    //   {/* Routes here */}
-    //   <Route path="/home" element={<Home />} />
-    //   <Route path="/users" element={<Users />} />
-    //   <Route path="/users/:userId" element={<User />} />
-
-    //   {/* Any redirects */}
-    //   <Route path="/" element={<Navigate replace to="/home" />} />
-
-    //   {/* Last is a catch-all route that will show a not found view */}
-    //   <Route path="*" element={<NotFound />} />
-    // </Routes>
   );
 };
 

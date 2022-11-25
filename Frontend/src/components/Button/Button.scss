@@ -2,8 +2,7 @@
 @use "../../styles/variables" as *;
 
 .button {
-  @include focus-outline;
-
+  
   border: none;
   cursor: pointer;
   background-color: $disabled-button-color;
@@ -20,12 +19,20 @@
 
   &:hover {
     background-color: darken($button-color, 5%);
+    color: #FFFFFF;
   }
+
+  .plusIcon {
+    margin-right: 15px;
+  }
+
 }
 
-.plusIcon {
-  margin-right: 15px;
+.plusIcon:hover {
+  color: white;
 }
+
+
 
 // at tablet breakpoints, button is no longer full width
 @media screen and (min-width: $tablet-breakpoint) {
