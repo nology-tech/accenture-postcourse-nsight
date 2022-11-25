@@ -4,6 +4,8 @@
 
 1. Install the dependencies with `npm install`
 2. Run the application with `npm start`
+3. Create a build with `npm run build`
+4. Serve the build with `npm install -g serve && serve -s build`
 
 ## File Structure 🗂️
 
