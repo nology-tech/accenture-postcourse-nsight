@@ -2,8 +2,6 @@ package com.nology.nsightapi.Classes;
 
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
-
-import javax.persistence.Entity;
 import java.sql.Date;
 
 @MappedSuperclass
