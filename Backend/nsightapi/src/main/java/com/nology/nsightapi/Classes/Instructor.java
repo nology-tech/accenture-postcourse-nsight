@@ -30,6 +30,10 @@ public class Instructor extends Person{
     public Instructor() {
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

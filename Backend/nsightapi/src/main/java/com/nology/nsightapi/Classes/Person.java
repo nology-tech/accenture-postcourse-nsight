@@ -1,22 +1,23 @@
 package com.nology.nsightapi.Classes;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @MappedSuperclass
 public class Person {
 
-    @NotNull
+    @Column(name = "name", nullable = false)
     private String name;
-    @NotNull
+    @Column(name = "photo_url")
     private String photoUrl;
-    @NotNull
+    @Column(name = "date_of_birth", nullable = false)
     private Date dateOfBirth;
-    @NotNull
+    @Column(name = "email", nullable = false)
     private String email;
-    @NotNull
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
+    @Column(name = "job_role", nullable = false)
     private String jobRole;
 
     public Person(String name, String photoUrl, Date dateOfBirth, String email, String phoneNumber, String jobRole) {

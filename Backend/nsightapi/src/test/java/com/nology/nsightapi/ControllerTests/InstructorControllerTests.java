@@ -11,18 +11,22 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Date;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.isA;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -63,7 +67,7 @@ public class InstructorControllerTests {
     public void givenInstructorObject_whenGetInstructors_returnListOfInstructors() throws Exception {
 
         Instructor instructor = new Instructor("Test Name", null, new Date(20221124L), "testemail@gmail.com", "12345678910", "Test role", new ArrayList<>());
-        when(instructorRepository.findAll()).thenReturn(List.of(instructor));
+        given(instructorRepository.findAll()).willReturn(List.of(instructor));
 
         Format dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -87,7 +91,7 @@ public class InstructorControllerTests {
     public void givenInstructorObject_whenGetInstructorById_returnInstructorObject() throws Exception {
 
         Instructor instructor = new Instructor("Test Name", null, new Date(20221124L), "testemail@gmail.com", "12345678910", "Test role", new ArrayList<>());
-        when(instructorRepository.findById(0)).thenReturn(instructor);
+        given(instructorRepository.findById(0)).willReturn(Optional.of(instructor));
 
         Format dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -95,7 +99,8 @@ public class InstructorControllerTests {
 
 //        response.andDo(print());
 
-        response.andExpect(jsonPath("$.id", is(instructor.getId())))
+        response.andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(instructor.getId())))
                 .andExpect(jsonPath("$.name", is(instructor.getName())))
                 .andExpect(jsonPath("$.photoUrl", is(instructor.getPhotoUrl())))
                 .andExpect(jsonPath("$.dateOfBirth", is(dateFormatter.format(instructor.getDateOfBirth()))))
@@ -106,4 +111,55 @@ public class InstructorControllerTests {
 
     }
 
+    @Test
+    public void givenEmptyRepository_whenGetInstructorByInvalidId_throwNotFoundException() throws Exception {
+
+        ResultActions response = mockMvc.perform(get("/instructor/0"));
+
+//        response.andDo(print());
+
+        response.andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException))
+                .andExpect(result -> assertEquals("404 NOT_FOUND \"Instructor not found.\"", Objects.requireNonNull(result.getResolvedException()).getMessage()));
+    }
+
+    @Test
+    public void givenEmptyRepository_whenGetInstructorByNonNumericId_throwBadRequestException() throws Exception {
+
+        ResultActions response = mockMvc.perform(get("/instructor/test"));
+
+//        response.andDo(print());
+
+        response.andExpect(status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException))
+                .andExpect(result -> assertEquals("400 BAD_REQUEST \"Non-numeric id entered.\"", Objects.requireNonNull(result.getResolvedException()).getMessage()));
+    }
+
+    @Test
+    public void givenInstructorObject_whenPutInstructor_returnSuccessString() throws Exception {
+
+        Instructor instructor = new Instructor("Test Name", null, new Date(20221124L), "testemail@gmail.com", "12345678910", "Test role", new ArrayList<>());
+        given(instructorRepository.findById(0)).willReturn(Optional.of(instructor));
+        given(instructorRepository.save(any(Instructor.class))).willAnswer((invocationOnMock -> invocationOnMock.getArgument(0)));
+
+        ResultActions response = mockMvc.perform(put("/instructor").content(objectMapper.writeValueAsString(instructor)).contentType(MediaType.APPLICATION_JSON));
+
+//        response.andDo(print());
+
+        response.andExpect(status().isCreated())
+                .andExpect(jsonPath("$", is("Successfully updated instructor.")));
+    }
+
+    @Test
+    public void givenInstructorObject_whenPutInstructorWithNoExistingInstructorId_returnException() throws Exception {
+
+        Instructor instructor = new Instructor("Test Name", null, new Date(20221124L), "testemail@gmail.com", "12345678910", "Test role", new ArrayList<>());
+        given(instructorRepository.save(any(Instructor.class))).willAnswer((invocationOnMock -> invocationOnMock.getArgument(0)));
+
+        ResultActions response = mockMvc.perform(put("/instructor").content(objectMapper.writeValueAsString(instructor)).contentType(MediaType.APPLICATION_JSON));
+
+        response.andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException))
+                .andExpect(result -> assertEquals("404 NOT_FOUND \"Instructor not found.\"", Objects.requireNonNull(result.getResolvedException()).getMessage()));
+    }
 }
