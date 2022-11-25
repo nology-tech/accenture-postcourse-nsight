@@ -1,0 +1,92 @@
+//Fonts and Colors for CV
+#cv {
+  height: 100vh;
+  line-height: 1.5;
+  display: grid;
+  justify-content: center;
+
+  h1 {
+    font-weight: bolder;
+    font-size: 2em;
+    color: purple;
+    line-height: 100%;
+  }
+
+  h3 {
+    font-weight: 400;
+  }
+
+  h4 {
+    color: purple;
+  }
+
+  h5 {
+    font-size: 95%;
+  }
+
+  .pink-color {
+    color: pink;
+  }
+
+  p,
+  li {
+    font-size: 95%;
+  }
+}
+// Grid
+.cv-grid {
+  display: grid;
+  padding: 2rem;
+  max-width: 80rem;
+  column-gap: 2.5rem;
+  row-gap: 0.5rem;
+  grid-template-areas:
+    "header header"
+    "about projects"
+    "skills work"
+    "education work"
+    "hobbies work";
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Assign grid areas to elements */
+#header {
+  grid-area: header;
+}
+#about {
+  grid-area: about;
+}
+#skills {
+  grid-area: skills;
+}
+#education {
+  grid-area: education;
+}
+#hobbies {
+  grid-area: hobbies;
+}
+#projects {
+  grid-area: projects;
+}
+#work {
+  grid-area: work;
+}
+
+// Bottom
+#about,
+#education,
+#skills,
+#projects {
+  padding-bottom: 0.7rem;
+  border-bottom: 1.5px solid pink;
+}
+
+#education,
+#skills,
+#projects,
+#education,
+#work {
+  display: grid;
+  row-gap: 1rem;
+}

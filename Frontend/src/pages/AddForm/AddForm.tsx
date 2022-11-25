@@ -89,10 +89,10 @@ export const AddForm = () => {
                 <label htmlFor="dateOfBirth">Date of Birth</label>
                 <Field id="dateOfBirth" name="dateOfBirth" type="date" />
 
-                <label htmlFor="email">"E-mail</label>
+                <label htmlFor="email">E-mail</label>
                 <Field id="email" name="email" type="text" />
 
-                <label htmlFor="mobileNumber">"Mobile number</label>
+                <label htmlFor="mobileNumber">Mobile number</label>
                 <Field id="mobileNumber" name="mobileNumber" type="text" />
 
                 <label htmlFor="dateOfGraduation">Graduation date</label>
