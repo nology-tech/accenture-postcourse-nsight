@@ -1,0 +1,95 @@
+.add-student-form {
+  color: black;
+  header {
+    height: 15vh;
+    width: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+
+    h1 {
+      width: 60rem;
+      font-weight: bolder;
+      font-size: 2em;
+      color: purple;
+      line-height: 100%;
+    }
+  }
+
+  &__section {
+    background-color: rgb(230, 236, 244);
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    height: 85vh;
+    width: 100%;
+
+    &__grid {
+      background-color: rgb(255, 255, 255);
+      max-width: 60rem;
+      height: 80%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      border-radius: 4px;
+      padding: 4rem;
+
+      &__buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 1rem;
+
+        button[type="submit"] {
+          width: 100%;
+          background-color: purple;
+          color: white;
+          padding: 14px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+          background-color: rgb(11, 199, 68);
+          color: white;
+        }
+
+        button[type="cancel"] {
+          width: 100%;
+          background-color: #faf9f9;
+          color: purple;
+          padding: 14px 20px;
+          border: 1px solid purple;
+          cursor: pointer;
+        }
+
+        button[type="cancel"]:hover {
+          border: 1px solid red;
+          color: red;
+        }
+      }
+
+      label.checkbox-input {
+        display: block;
+        width: 100%;
+        padding: 8px 0;
+        margin: 8px 0;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      input[type="email"],
+      input[type="number"],
+      select {
+        width: 100%;
+        padding: 8px 16px;
+        margin: 8px 0;
+        display: block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import AddForm from "./pages/AddForm/AddForm";
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
 import User from "./pages/User/User";
@@ -12,6 +13,7 @@ const App = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/users" element={<Users />} />
       <Route path="/users/:userId" element={<User />} />
+      <Route path="/form" element={<AddForm />} />
 
       {/* Any redirects */}
       <Route path="/" element={<Navigate replace to="/home" />} />
