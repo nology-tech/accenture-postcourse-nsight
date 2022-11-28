@@ -93,7 +93,7 @@ public class StudentController {
             repository.deleteById(Integer.parseInt(id));
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Successfully deleted student.");
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Instructor not found.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found.");
         } catch (BadRequestException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Non-numeric id entered.");
         }  catch (Exception e) {

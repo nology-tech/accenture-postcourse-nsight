@@ -234,7 +234,7 @@ public class StudentControllerTests {
 
         response.andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException))
-                .andExpect(result -> assertEquals("404 NOT_FOUND \"Instructor not found.\"", Objects.requireNonNull(result.getResolvedException()).getMessage()));
+                .andExpect(result -> assertEquals("404 NOT_FOUND \"Student not found.\"", Objects.requireNonNull(result.getResolvedException()).getMessage()));
     }
 
     @Test

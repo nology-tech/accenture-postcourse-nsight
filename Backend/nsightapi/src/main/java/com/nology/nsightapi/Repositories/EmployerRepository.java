@@ -4,10 +4,12 @@ import com.nology.nsightapi.Entities.Employer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface EmployerRepository extends JpaRepository<Employer, String> {
 
-    Employer findById(int id);
+    Optional<Employer> findById(int id);
 
     void deleteById(int id);
 }
