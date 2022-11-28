@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -28,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -149,22 +151,19 @@ public class InstructorControllerTests {
                 .andExpect(result -> assertEquals("406 NOT_ACCEPTABLE \"Id already in use.\"", Objects.requireNonNull(result.getResolvedException()).getMessage()));
     }
 
-//    @Test
-//    public void givenInstructorObject_whenCreateInstructorWithNullNonNullRequiredValues_throwDataIntegrityViolationException() throws Exception {
-//
-//        Instructor instructor = new Instructor(null, null, new Date(20221124L), "testemail@gmail.com", "12345678910", "Test role", new ArrayList<>());
-////        given(instructorRepository.findById(any(Integer.class))).willReturn(null);
-//        given(instructorRepository.findById(any(Integer.class)).isPresent()).willReturn(false);
-////        given(instructorRepository.save(any(Instructor.class))).willThrow(new DataIntegrityViolationException("Test msg"));
-//
-//        ResultActions response = mockMvc.perform(post("/instructor").content(objectMapper.writeValueAsString(instructor)).contentType(MediaType.APPLICATION_JSON));
-//
-////        response.andDo(print());
-//
-//        response.andExpect(status().isBadRequest())
-//                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException))
-//                .andExpect(result -> assertEquals("400 BAD_REQUEST \"Missing non-null values.\"", Objects.requireNonNull(result.getResolvedException()).getMessage()));
-//    }
+    @Test
+    public void givenInstructorObject_whenCreateInstructorWithNullNonNullRequiredValues_throwDataIntegrityViolationException() throws Exception {
+
+        Instructor instructor = new Instructor(null, null, new Date(20221124L), "testemail@gmail.com", "12345678910", "Test role", new ArrayList<>());
+
+        given(instructorRepository.save(any(Instructor.class))).willThrow(new DataIntegrityViolationException("Test msg"));
+
+        ResultActions response = mockMvc.perform(post("/instructor").content(objectMapper.writeValueAsString(instructor)).contentType(MediaType.APPLICATION_JSON));
+
+        response.andExpect(status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException))
+                .andExpect(result -> assertEquals("400 BAD_REQUEST \"Missing non-null values.\"", Objects.requireNonNull(result.getResolvedException()).getMessage()));
+    }
 
     @Test
     public void givenInstructorObject_whenPutInstructor_returnSuccessString() throws Exception {
@@ -185,6 +184,7 @@ public class InstructorControllerTests {
     public void givenInstructorObject_whenPutInstructorWithNoExistingInstructorId_returnNotFoundException() throws Exception {
 
         Instructor instructor = new Instructor("Test Name", null, new Date(20221124L), "testemail@gmail.com", "12345678910", "Test role", new ArrayList<>());
+
         given(instructorRepository.save(any(Instructor.class))).willAnswer((invocationOnMock -> invocationOnMock.getArgument(0)));
 
         ResultActions response = mockMvc.perform(put("/instructor").content(objectMapper.writeValueAsString(instructor)).contentType(MediaType.APPLICATION_JSON));
@@ -192,6 +192,21 @@ public class InstructorControllerTests {
         response.andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException))
                 .andExpect(result -> assertEquals("404 NOT_FOUND \"Instructor not found.\"", Objects.requireNonNull(result.getResolvedException()).getMessage()));
+    }
+
+    @Test
+    public void givenInstructorObject_whenPutInstructorWithNullNonNullRequiredValues_throwDataIntegrityViolationException() throws Exception {
+
+        Instructor instructor = new Instructor(null, null, new Date(20221124L), "testemail@gmail.com", "12345678910", "Test role", new ArrayList<>());
+
+        given(instructorRepository.findById(any(Integer.class))).willReturn(Optional.of(instructor));
+        given(instructorRepository.save(any(Instructor.class))).willThrow(new DataIntegrityViolationException("Test msg"));
+
+        ResultActions response = mockMvc.perform(put("/instructor").content(objectMapper.writeValueAsString(instructor)).contentType(MediaType.APPLICATION_JSON));
+
+        response.andExpect(status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException))
+                .andExpect(result -> assertEquals("400 BAD_REQUEST \"Missing non-null values.\"", Objects.requireNonNull(result.getResolvedException()).getMessage()));
     }
 
     @Test
