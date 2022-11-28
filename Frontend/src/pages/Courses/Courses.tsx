@@ -1,22 +1,16 @@
-import Button from "../../components/Button/Button";
+
+import CoursesNav from "../../components/CoursesNav/CoursesNav";
 import Layout from "../../components/Layout/Layout";
 import "./Courses.scss"
 
-export const Home = () => {
+export const Courses = () => {
   return (
     <div className="home">
       <Layout>
-        
-        <Button
-          className="button"
-          label="Create"
-          onClick={() => {
-            console.log("button clicked");
-          }}
-        />
+        <CoursesNav />
       </Layout>
     </div>
   );
 };
 
-export default Home;
+export default Courses;

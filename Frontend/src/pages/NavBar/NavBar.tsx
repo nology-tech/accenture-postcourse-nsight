@@ -1,6 +1,8 @@
 import React from 'react'
 import "./NavBar.scss"
 import * as data from "./links.json"
+import logo from "../../assets/logo.png"
+
 const linksString = JSON.stringify(data);
 const links = JSON.parse(linksString).links;
 
@@ -30,7 +32,7 @@ const NavBar: React.FC<{}> = () => {
   return (
     <nav className="navbar">
       <div className="logo-container">
-        <div className="logo-container_logo">Logo</div>
+        <img src={ logo } alt="nology logo" className=" logo-container_logo" />
       </div>
       <hr />
       <Links links={links} />
