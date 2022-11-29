@@ -1,8 +1,8 @@
 package com.nology.nsightapi.ControllerTests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nology.nsightapi.Entities.Instructor;
 import com.nology.nsightapi.Controllers.InstructorController;
+import com.nology.nsightapi.Entities.Instructor;
 import com.nology.nsightapi.Repositories.InstructorRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -86,7 +85,7 @@ public class InstructorControllerTests {
     public void givenInstructorObject_whenGetInstructorById_returnInstructorObject() throws Exception {
 
         Instructor instructor = new Instructor("Test Name", null, new Date(20221124L), "testemail@gmail.com", "12345678910", "Test role", new ArrayList<>());
-        given(instructorRepository.findById(0)).willReturn(Optional.of(instructor));
+        given(instructorRepository.findById(any(Integer.class))).willReturn(Optional.of(instructor));
 
         Format dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -169,12 +168,12 @@ public class InstructorControllerTests {
     public void givenInstructorObject_whenPutInstructor_returnSuccessString() throws Exception {
 
         Instructor instructor = new Instructor("Test Name", null, new Date(20221124L), "testemail@gmail.com", "12345678910", "Test role", new ArrayList<>());
+
         given(instructorRepository.findById(0)).willReturn(Optional.of(instructor));
         given(instructorRepository.save(any(Instructor.class))).willAnswer((invocationOnMock -> invocationOnMock.getArgument(0)));
 
         ResultActions response = mockMvc.perform(put("/instructor").content(objectMapper.writeValueAsString(instructor)).contentType(MediaType.APPLICATION_JSON));
 
-//        response.andDo(print());
 
         response.andExpect(status().isCreated())
                 .andExpect(jsonPath("$", is("Successfully updated instructor.")));
@@ -211,13 +210,15 @@ public class InstructorControllerTests {
 
     @Test
     public void givenInstructorObject_whenDeleteInstructorById_returnSuccessString() throws Exception {
+
         Instructor instructor = new Instructor(null, null, new Date(20221124L), "testemail@gmail.com", "12345678910", "Test role", new ArrayList<>());
-        given(instructorRepository.findById(0)).willReturn(Optional.of(instructor));
+
+        given(instructorRepository.findById(any(Integer.class))).willReturn(Optional.of(instructor));
 
         ResultActions response = mockMvc.perform(delete("/instructor/0"));
 
         response.andExpect(status().isNoContent())
-                .andExpect(jsonPath("$", is("Deleted instructor.")));
+                .andExpect(jsonPath("$", is("Successfully deleted instructor.")));
     }
 
     @Test
@@ -232,7 +233,6 @@ public class InstructorControllerTests {
 
     @Test
     public void givenInstructorObject_whenDeleteInstructorWithInvalidInstructorId_throwBadRequestException() throws Exception {
-        given(instructorRepository.deleteById(any(Integer.class))).willAnswer((invocationOnMock -> invocationOnMock.getArgument(0)));
 
         ResultActions response = mockMvc.perform(delete("/instructor/test"));
 

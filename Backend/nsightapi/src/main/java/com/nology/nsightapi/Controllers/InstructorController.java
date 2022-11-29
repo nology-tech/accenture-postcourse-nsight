@@ -91,7 +91,7 @@ public class InstructorController {
                 throw new NotFoundException();
             }
             repository.deleteById(Integer.parseInt(id));
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Deleted instructor.");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Successfully deleted instructor.");
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Instructor not found.");
         } catch (BadRequestException e) {

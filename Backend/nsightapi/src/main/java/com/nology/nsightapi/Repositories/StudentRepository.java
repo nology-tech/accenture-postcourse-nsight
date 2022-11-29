@@ -4,10 +4,12 @@ import com.nology.nsightapi.Entities.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface StudentRepository extends JpaRepository<Student, String> {
 
-    Student findById(int id);
+    Optional<Student> findById(int id);
 
-    void deleteById(int id);
+    Void deleteById(int id);
 }
