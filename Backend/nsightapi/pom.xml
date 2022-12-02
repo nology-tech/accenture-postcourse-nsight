@@ -59,11 +59,11 @@
 <!--			<groupId>com.amazonaws</groupId>-->
 <!--			<artifactId>aws-java-sdk-s3</artifactId>-->
 <!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>com.amazonaws</groupId>-->
-<!--			<artifactId>aws-java-sdk</artifactId>-->
-<!--			<version>1.11.1000</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.12.352</version>
+		</dependency>
     </dependencies>
 
 	<build>
