@@ -31,16 +31,15 @@
     }
 }
 
-.links-container {
-  align-self: center;
+ul {
+  color: $text-color;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+li {
   padding: 30px;
-
-  .link {
-    padding: 10px;
-  }
-
-  a {
-    text-decoration: none;
-  }
 }
 

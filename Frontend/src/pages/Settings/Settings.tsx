@@ -4,6 +4,6 @@ export interface props {}
 
 export const Settings: React.FC<props> = (): JSX.Element => (
     <div>
-        {"Settings"}
+        <h1>Settings</h1>
     </div>
 );

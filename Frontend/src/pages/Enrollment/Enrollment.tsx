@@ -4,6 +4,6 @@ export interface props {}
 
 export const Enrollment: React.FC<props> = (): JSX.Element => (
     <div>
-        {"Enrollment"}
+        <h1>Enrollments</h1>
     </div>
 );
