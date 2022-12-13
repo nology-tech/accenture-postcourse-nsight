@@ -6,8 +6,10 @@ $large-desktop-breakpoint: 1440px;
 $extra-large-desktop-breakpoint: 2560px;
 
 //colors
-$primary-color: #6495ed;
-$text-color: #f5f5f5;
+$primary-color: rgba(255, 255, 255, 0.5);
+$text-color: rgb(193, 187, 187);
 $disabled-background-color: #cccccc;
 $disabled-text-color: #909090;
 $outline-color: $text-color;
+$disabled-button-color: #724BCB;
+$button-color: #5a3c9f;
