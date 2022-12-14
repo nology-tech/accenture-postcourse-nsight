@@ -1,28 +1,27 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/Home";
 import NavBar from "./pages/NavBar/NavBar";
-import NotFound from "./pages/NotFound/NotFound";
-import User from "./pages/User/User";
-import Users from "./pages/Users/Users";
 import "./styles/main.scss";
+import Courses  from "./pages/Courses/Courses"
+import { Students } from "./pages/Students/Students";
+import { Enrollment } from "./pages/Enrollment/Enrollment";
+import { Settings } from "./pages/Settings/Settings";
 
 const App = () => {
   return (
     <>
       <NavBar />
-        <Routes>
-          {/* Routes here */}
-          <Route path="/home" element={<Home />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/users/:userId" element={<User />} />
+      <Routes>
+        {/* Routes here */}
+        <Route path="/Courses" element={<Courses />} />
+        <Route path="/Students" element={<Students />} />
+        <Route path="/Enrollment" element={<Enrollment />} />
+        <Route path="/Settings" element={<Settings />} />
 
-          {/* Any redirects */}
-          <Route path="/" element={<Navigate replace to="/home" />} />
+        {/* Any redirects */}
+        <Route path="/" element={<Navigate replace to="/Courses" />} />
 
-          {/* Last is a catch-all route that will show a not found view */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-    </> 
+     </Routes>
+    </>
   );
 };
 
